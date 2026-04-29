@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
 const testimonials = [
   {
@@ -77,9 +78,10 @@ export default function HomePageContent({ city = "" }) {
             <p className="text-xs text-slate-500">Luxury properties & concierge service</p>
           </div>
           <nav className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
-            <a href="#top" className="transition hover:text-slate-900">Home</a>
+            <Link href="/" className="transition hover:text-slate-900">Home</Link>
             <a href="#about" className="transition hover:text-slate-900">About</a>
             <a href="#services" className="transition hover:text-slate-900">Services</a>
+            <Link href="/home-valuation" className="transition hover:text-[#B8860B] font-semibold">Home Valuation</Link>
             <a href="#quote" className="transition hover:text-slate-900">Quote</a>
           </nav>
           <div className="hidden items-center gap-4 md:flex">
@@ -168,11 +170,16 @@ export default function HomePageContent({ city = "" }) {
               Personalized search, market insight, and expert negotiation to secure the right luxury property.
             </p>
           </div>
-          <div className="space-y-4 rounded-[28px] border border-slate-200 bg-slate-50 p-6">
-            <p className="text-xl font-semibold text-slate-950">Seller strategy</p>
-            <p className="text-base leading-7 text-slate-600">
-              Strategic pricing, high-end presentation, and targeted buyer outreach for faster premium sales.
-            </p>
+          <div className="space-y-4 rounded-[28px] border border-slate-200 bg-slate-50 p-6 flex flex-col justify-between">
+            <div>
+              <p className="text-xl font-semibold text-slate-950">Seller strategy</p>
+              <p className="text-base leading-7 text-slate-600 mt-4">
+                Strategic pricing, high-end presentation, and targeted buyer outreach for faster premium sales.
+              </p>
+            </div>
+            <Link href="/home-valuation" className="mt-6 text-sm font-semibold text-[#B8860B] hover:underline">
+              Get free valuation →
+            </Link>
           </div>
         </section>
 
@@ -269,6 +276,27 @@ export default function HomePageContent({ city = "" }) {
                 {loading ? "Sending..." : "Send request"}
               </button>
             </form>
+          </div>
+        </section>
+
+        <section id="valuation" className="scroll-mt-28 py-12">
+          <div className="rounded-[36px] bg-[#0070f3] px-6 py-20 text-center text-white shadow-xl">
+            <div className="mx-auto max-w-3xl space-y-6">
+              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+                What's My Home Worth?
+              </h2>
+              <p className="text-lg opacity-90">
+                Let Reshma Realtor help find your home's current market value today!
+              </p>
+              <div className="pt-6">
+                <Link
+                  href="/home-valuation"
+                  className="inline-flex rounded-xl border-2 border-white bg-transparent px-8 py-4 text-lg font-bold text-white transition hover:bg-white hover:text-[#0070f3]"
+                >
+                  Get a Home Valuation
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
