@@ -82,11 +82,10 @@ export default function HomePageContent({ city = "" }) {
             <a href="#about" className="transition hover:text-slate-900">About</a>
             <a href="#services" className="transition hover:text-slate-900">Services</a>
             <Link href="/home-valuation" className="transition hover:text-[#B8860B] font-semibold">Home Valuation</Link>
-            <a href="#quote" className="transition hover:text-slate-900">Quote</a>
           </nav>
           <div className="hidden items-center gap-4 md:flex">
             <span className="text-sm font-medium text-slate-700">Call us:</span>
-            <a href="tel:+14084789170" className="text-sm font-semibold text-[#002147] transition hover:text-[#001533]">
+            <a href="tel:+14084789170" className="text-sm font-semibold text-[#002147] transition hover:text-[#001533] text-md">
               +1 408 478 9170
             </a>
           </div>
@@ -203,11 +202,10 @@ export default function HomePageContent({ city = "" }) {
             <form ref={contactFormRef} onSubmit={onFormSubmit} className="mt-8 space-y-6">
               {status ? (
                 <div
-                  className={`rounded-3xl border px-4 py-3 text-sm ${
-                    statusType === "success"
-                      ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                      : "border-rose-300 bg-rose-50 text-rose-900"
-                  }`}
+                  className={`rounded-3xl border px-4 py-3 text-sm ${statusType === "success"
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+                    : "border-rose-300 bg-rose-50 text-rose-900"
+                    }`}
                 >
                   {status}
                 </div>
