@@ -21,8 +21,8 @@ const testimonials = [
 const stats = [
   { title: "Years of experience", value: "12+" },
   { title: "Client satisfaction", value: "9.5" },
-  { title: "Homes sold", value: "300+" },
-  { title: "Total sales volume", value: "$500M+" },
+  { title: "Homes sold", value: "28+" },
+  // { title: "Total sales volume", value: "$500M+" },
 ];
 
 function formatCity(city) {
@@ -96,10 +96,10 @@ export default function HomePageContent({ city = "" }) {
             style={{ width: '100%', height: '560px', objectFit: 'cover', display: 'block' }}
             priority
           />
-          <div className="rs-hero-badge">
+          {/* <div className="rs-hero-badge">
             <span className="rs-hero-badge-num">$500M+</span>
             <span className="rs-hero-badge-label">Total sales volume</span>
-          </div>
+          </div> */}
         </div>
       </section>
 

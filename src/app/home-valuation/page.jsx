@@ -27,17 +27,17 @@ export default function HomeValuationPage() {
         </div>
         <div style={{ paddingLeft: '40px' }}>
           <div className="rs-about-aside" style={{ border: 'none', paddingTop: 0 }}>
-             <p className="rs-about-aside-title">Why a human valuation?</p>
-             {[
-               "Local market expert oversight.",
-               "Tailored pricing strategy.",
-               "Delivered within 24 hours.",
-             ].map((text, i) => (
-               <div key={i} className="rs-differentiator">
-                 <span className="rs-diff-num">0{i + 1}</span>
-                 <span className="rs-diff-text">{text}</span>
-               </div>
-             ))}
+            <p className="rs-about-aside-title">Why a human valuation?</p>
+            {[
+              "Local market expert oversight.",
+              "Tailored pricing strategy.",
+              "Delivered within 24 hours.",
+            ].map((text, i) => (
+              <div key={i} className="rs-differentiator">
+                <span className="rs-diff-num">0{i + 1}</span>
+                <span className="rs-diff-text">{text}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -47,7 +47,7 @@ export default function HomeValuationPage() {
         {/* TRUST BAR */}
         <div className="rs-stats-inner" style={{ background: 'var(--navy)', marginBottom: '80px', borderRadius: '4px' }}>
           <div className="rs-stat-item">
-            <span className="rs-stat-value">300+</span>
+            <span className="rs-stat-value">28+</span>
             <span className="rs-stat-label">Homes Sold</span>
           </div>
           <div className="rs-stat-item">
@@ -89,7 +89,7 @@ export default function HomeValuationPage() {
             </p>
           </div>
           <div>
-             <p className="rs-about-body">
+            <p className="rs-about-body">
               Reshma combines real-time data with on-the-ground expertise to give you a clear, confident next step.
               Your privacy is paramount; your information is used only to prepare your report.
             </p>
