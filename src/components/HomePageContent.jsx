@@ -9,12 +9,12 @@ const testimonials = [
   {
     quote: "Reshma made our home purchase effortless and enjoyable. Her attention to detail is exceptional.",
     name: "Claire Morgan",
-    role: "Homeowner, Los Gatos",
+    // role: "Homeowner, Los Gatos",
   },
   {
     quote: "A truly personalized experience. Reshma found us the perfect luxury home ahead of schedule.",
     name: "James Carter",
-    role: "Investor, Saratoga",
+    // role: "Investor, Saratoga",
   },
 ];
 
@@ -132,10 +132,24 @@ export default function HomePageContent({ city = "" }) {
               <p className="rs-about-body" style={{ marginTop: '20px' }}>
                 Whether you're looking for your first dream home, expanding your investment portfolio, or selling a multi-million dollar estate, Reshma provides the data-driven insights and refined negotiation skills needed to navigate the complexities of today's market with confidence.
               </p>
+
+
             </div>
           </div>
-
-          <div className="rs-about-aside">
+        </div>
+        <div className="" style={{ maxWidth: '500px' }}>
+          {/* <Image
+              src="/images/reshma.png"
+              alt="Reshma Sait - Luxury Real Estate Expert"
+              width={500}
+              height={600}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover', display: 'block' }}
+            />
+            <div className="rs-hero-badge" style={{ bottom: '-20px', right: '-20px', left: 'auto' }}>
+              <span className="rs-hero-badge-num">12+</span>
+              <span className="rs-hero-badge-label">Years of Excellence</span>
+            </div> */}
+          <div className="rs-about-aside" style={{ marginTop: '40px' }}>
             <p className="rs-about-aside-title">Why work with Reshma</p>
             {[
               "Personalized strategies tailored to your unique goals.",
@@ -301,7 +315,7 @@ export default function HomePageContent({ city = "" }) {
                 <span className="rs-testimonial-quote-mark">"</span>
                 <p className="rs-testimonial-text">{item.quote}</p>
                 <p className="rs-testimonial-author">{item.name}</p>
-                <p className="rs-testimonial-role">{item.role}</p>
+                {/* <p className="rs-testimonial-role">{item.role}</p> */}
               </div>
             ))}
           </div>

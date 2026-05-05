@@ -15,8 +15,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Reshma Sait | Realtor® DRE #02106214 | Luxury Real Estate Expert",
-  description: "Experience excellence in luxury real estate with Reshma Sait, your premier realtor in the United States. DRE #02106214. Find your dream home today.",
+  title: "Reshma Sait | Luxury Realtor® in San Jose & Bay Area | DRE #02106214",
+  description: "Luxury real estate expert Reshma Sait specializes in San Jose, the Silicon Valley, and the greater Bay Area. DRE #02106214. Find your dream home in Silicon Valley today.",
 };
 
 export default function RootLayout({ children }) {

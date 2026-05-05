@@ -24,13 +24,16 @@ export default function Footer() {
                     </ul>
                 </div>
                 <div>
+                    <p className="rs-footer-contact-title">Areas Served</p>
+                    <p className="rs-footer-contact-item">San Jose · Silicon Valley</p>
+                    <p className="rs-footer-contact-item">Santa Clara · Sunnyvale</p>
+                    <p className="rs-footer-contact-item">Los Gatos · Cambrian Park</p>
+                </div>
+                <div>
                     <p className="rs-footer-contact-title">Contact</p>
                     <p className="rs-footer-contact-item">
                         <a href="tel:+14084789170">+1 408 478 9170</a>
                     </p>
-                    {/* <p className="rs-footer-contact-item">
-                        <a href="mailto:hello@homesbyreshma.com">hello@homesbyreshma.com</a>
-                    </p> */}
                 </div>
             </div>
             <div className="rs-footer-bottom">
