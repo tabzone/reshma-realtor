@@ -9,17 +9,20 @@ const testimonials = [
   {
     quote: "Reshma made our home purchase effortless and enjoyable. Her attention to detail is exceptional.",
     name: "Claire Morgan",
+    role: "Homeowner, Los Gatos",
   },
   {
     quote: "A truly personalized experience. Reshma found us the perfect luxury home ahead of schedule.",
     name: "James Carter",
+    role: "Investor, Saratoga",
   },
 ];
 
-const features = [
-  "Custom market analysis for luxury home sales.",
-  "White-glove buyer representation and negotiation.",
-  "Exclusive listing exposure and concierge support.",
+const stats = [
+  { title: "Years of experience", value: "12+" },
+  { title: "Client satisfaction", value: "9.5" },
+  { title: "Homes sold", value: "300+" },
+  { title: "Total sales volume", value: "$500M+" },
 ];
 
 function formatCity(city) {
@@ -32,303 +35,290 @@ function formatCity(city) {
 
 export default function HomePageContent({ city = "" }) {
   const contactFormRef = useRef();
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("");
-
   const cityName = formatCity(city);
-  const heroSubtitle = cityName ? `Find your dream home with Reshma, your trusted luxury realtor.` : "Find your dream home with Reshma, your trusted luxury realtor.";
 
   const onFormSubmit = async (e) => {
-    setloading(true);
+    e.preventDefault();
+    setLoading(true);
     setStatus("");
     setStatusType("");
-    e.preventDefault();
     const data = new FormData(contactFormRef.current);
     const value = Object.fromEntries(data.entries());
-
     axios
-      .post("https://formspree.io/f/mnqyzaaa", {
+      .post("https://formspree.io/f/mnqypzev", {
         fullName: value.fullName,
         email: value.email,
         message: value.message,
         phone: value.phone,
         city: value.city,
       })
-      .then((res) => {
-        setloading(false);
+      .then(() => {
+        setLoading(false);
         setStatus("Message sent successfully.");
         setStatusType("success");
         contactFormRef.current.reset();
       })
-      .catch((err) => {
-        console.error(err);
-        setloading(false);
+      .catch(() => {
+        setLoading(false);
         setStatus("Failed to send. Please try again.");
         setStatusType("error");
       });
   };
 
   return (
-    <div id="top" className="min-h-screen bg-[#f8f8f6] text-slate-900">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#002147]">Reshma Realtor</p>
-            <p className="text-xs text-slate-500">Luxury properties & concierge service</p>
+    <div className="rs-page">
+      {/* HERO */}
+      <section className="rs-hero">
+        <div>
+          <p className="rs-hero-eyebrow">Luxury Real Estate · Bay Area & Beyond</p>
+          <h1 className="rs-hero-h1">
+            Find your<br />
+            <em>dream home</em><br />
+            with Reshma.
+          </h1>
+          <p className="rs-hero-body">
+            Expert guidance, curated service, and premium listings across top U.S. markets. Tailored for discerning buyers, sellers, and investors.
+          </p>
+          <div className="rs-hero-actions">
+            <a href="#quote" className="rs-btn-gold" style={{ padding: '14px 32px', fontSize: '12px' }}>Get a quote</a>
+            <a href="tel:+14084789170" className="rs-btn-outline" style={{ padding: '14px 32px', fontSize: '12px' }}>+1 408 478 9170</a>
           </div>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
-            <Link href="/" className="transition hover:text-slate-900">Home</Link>
-            <a href="#about" className="transition hover:text-slate-900">About</a>
-            <a href="#services" className="transition hover:text-slate-900">Services</a>
-            <Link href="/home-valuation" className="transition hover:text-[#B8860B] font-semibold">Home Valuation</Link>
-          </nav>
-          <div className="hidden items-center gap-4 md:flex">
-            <span className="text-sm font-medium text-slate-700">Call us:</span>
-            <a href="tel:+14084789170" className="text-sm font-semibold text-[#002147] transition hover:text-[#001533] text-md">
-              +1 408 478 9170
-            </a>
-          </div>
-          <a href="#quote" className="btn-primary hidden rounded-full text-sm font-semibold md:inline-flex">
-            Request a quote
-          </a>
-          <a href="tel:+14084789170" className="btn-secondary inline-flex rounded-full text-sm font-semibold md:hidden">
-            Call now
-          </a>
         </div>
-      </header>
+        <div className="rs-hero-img-wrap">
+          <Image
+            src="/images/hero.png"
+            alt="Luxury home exterior"
+            width={700}
+            height={560}
+            style={{ width: '100%', height: '560px', objectFit: 'cover', display: 'block' }}
+            priority
+          />
+          <div className="rs-hero-badge">
+            <span className="rs-hero-badge-num">$500M+</span>
+            <span className="rs-hero-badge-label">Total sales volume</span>
+          </div>
+        </div>
+      </section>
 
-      <main className="mx-auto flex max-w-7xl flex-col gap-20 px-6 py-10 lg:px-10">
-        <section className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex rounded-full bg-[#B8860B]/10 px-4 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-[#B8860B]">
-              Luxury real estate
-            </span>
-            <h1 className="max-w-3xl text-5xl font-semibold leading-tight text-slate-950 sm:text-6xl">
-              {heroSubtitle}
-            </h1>
-            <p className="max-w-2xl text-lg leading-8 text-slate-600">
-              Expert guidance, curated service, and premium listings across top U.S. markets. Get a tailored quote for buying, selling, or investing in luxury real estate.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <a href="#quote" className="btn-primary inline-flex items-center justify-center text-sm font-semibold">
-                Get a quote
-              </a>
-              <a href="tel:+14084789170" className="btn-secondary inline-flex items-center justify-center text-sm font-semibold">
-                Call +1 408 478 9170
-              </a>
+      {/* STATS */}
+      <section className="rs-stats">
+        <div className="rs-stats-inner">
+          {stats.map((stat) => (
+            <div key={stat.title} className="rs-stat-item">
+              <span className="rs-stat-accent" />
+              <span className="rs-stat-value">{stat.value}</span>
+              <span className="rs-stat-label">{stat.title}</span>
             </div>
-          </div>
+          ))}
+        </div>
+      </section>
 
-          <div className="overflow-hidden rounded-[32px] bg-white shadow-[0_35px_90px_rgba(15,23,42,0.12)]">
-            <Image
-              src="/images/hero.png"
-              alt="Luxury home exterior"
-              width={940}
-              height={740}
-              className="h-full w-full object-cover"
-              priority
-            />
-          </div>
-        </section>
-
-        <section id="about" className="scroll-mt-28 rounded-[36px] bg-white p-8 shadow-sm lg:p-10">
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div className="space-y-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#B8860B]">About Reshma</p>
-              <h2 className="text-3xl font-semibold text-slate-950">Luxury real estate expertise made personal.</h2>
-              <p className="text-base leading-8 text-slate-600">
-                Reshma brings over a decade of premium real estate experience, specializing in luxury homes, exclusive estates, and strategic investments. She combines deep market knowledge with a concierge approach to help clients move confidently at every step.
+      {/* ABOUT / MEET RESHMA */}
+      <section id="about" className="rs-section" style={{ scrollMarginTop: '72px' }}>
+        <div className="rs-about-grid" style={{ alignItems: 'center' }}>
+          <div>
+            <p className="rs-section-eyebrow">Meet Reshma Sait</p>
+            <h2 className="rs-section-h2">A dedication to<br /><em>your success.</em></h2>
+            <div style={{ marginTop: '32px' }}>
+              <p className="rs-about-body">
+                Reshma Sait is more than just a real estate agent; she is a trusted advisor and a strategic partner in your real estate journey. With over a decade of experience in the high-stakes Bay Area market, Reshma has built a reputation for her unwavering integrity, discreet service, and exceptional results.
               </p>
-              <p className="text-base leading-8 text-slate-600">
-                Whether you are buying your next dream home or selling a high-value property, Reshma delivers tailored guidance, discreet service, and results-focused negotiation for discerning buyers and sellers.
+              <p className="rs-about-body" style={{ marginTop: '20px' }}>
+                Specializing in luxury estates and premium residential properties, she combines a deep understanding of market dynamics with a concierge-level approach. Her philosophy is simple: every client deserves a white-glove experience, regardless of the price point.
+              </p>
+              <p className="rs-about-body" style={{ marginTop: '20px' }}>
+                Whether you're looking for your first dream home, expanding your investment portfolio, or selling a multi-million dollar estate, Reshma provides the data-driven insights and refined negotiation skills needed to navigate the complexities of today's market with confidence.
               </p>
             </div>
-            <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-6">
-              <p className="text-sm uppercase tracking-[0.18em] text-slate-500">What sets Reshma apart</p>
-              <ul className="mt-6 space-y-4 text-base leading-7 text-slate-700">
-                <li>Client-first luxury service with a white-glove touch.</li>
-                <li>Deep local insight for premium U.S. markets.</li>
-                <li>Proven ability to negotiate top outcomes with confidentiality.</li>
-              </ul>
-            </div>
           </div>
-        </section>
 
-        <section id="services" className="scroll-mt-28 grid gap-8 rounded-[36px] bg-white p-8 shadow-sm lg:grid-cols-3">
-          <div className="space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#B8860B]">What we offer</p>
-            <h2 className="text-3xl font-semibold text-slate-950">White-glove support, every step of the way.</h2>
-            <p className="text-base leading-8 text-slate-600">
-              From premium marketing and staging to negotiation and closing, Reshma delivers a concierge experience for luxury buyers and sellers.
+          <div className="rs-about-aside">
+            <p className="rs-about-aside-title">Why work with Reshma</p>
+            {[
+              "Personalized strategies tailored to your unique goals.",
+              "Exclusive access to off-market luxury listings.",
+              "Comprehensive marketing for maximum property exposure.",
+              "Full-service support from listing to closing."
+            ].map((text, i) => (
+              <div key={i} className="rs-differentiator">
+                <span className="rs-diff-num">0{i + 1}</span>
+                <span className="rs-diff-text">{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COMMISSION */}
+      <div className="rs-commission">
+        <div className="rs-commission-inner">
+          <div>
+            <span className="rs-commission-label">Listing commission</span>
+            <div className="rs-commission-rate">1.5<sup>%</sup></div>
+          </div>
+          <div>
+            <span className="rs-commission-label">What this means for you</span>
+            <p className="rs-commission-headline">
+              Keep more of what<br />your home is worth.
             </p>
           </div>
-          <div className="space-y-4 rounded-[28px] border border-slate-200 bg-slate-50 p-6">
-            <p className="text-xl font-semibold text-slate-950">Buyer representation</p>
-            <p className="text-base leading-7 text-slate-600">
-              Personalized search, market insight, and expert negotiation to secure the right luxury property.
-            </p>
+          <div className="rs-commission-includes">
+            <p className="rs-commission-includes-title">Included</p>
+            <ul className="rs-commission-list">
+              <li>Complimentary staging</li>
+              <li>Professional photography</li>
+              <li>3D virtual tours</li>
+              <li>Full marketing suite</li>
+              <li>…and much more</li>
+            </ul>
           </div>
-          <div className="space-y-4 rounded-[28px] border border-slate-200 bg-slate-50 p-6 flex flex-col justify-between">
-            <div>
-              <p className="text-xl font-semibold text-slate-950">Seller strategy</p>
-              <p className="text-base leading-7 text-slate-600 mt-4">
-                Strategic pricing, high-end presentation, and targeted buyer outreach for faster premium sales.
-              </p>
-            </div>
-            <Link href="/home-valuation" className="mt-6 text-sm font-semibold text-[#B8860B] hover:underline">
-              Get free valuation →
+        </div>
+      </div>
+
+      {/* MARKET STATS */}
+      <div className="rs-market">
+        <p className="rs-market-header">Cambrian Park Market · Single-Family Residential · April 2026</p>
+        <div className="rs-market-card">
+          <div>
+            <p className="rs-market-stat-label">Median Sold Price</p>
+            <p className="rs-market-stat-value">$2.1M</p>
+          </div>
+          <div className="rs-market-divider" />
+          <div>
+            <p className="rs-market-stat-label">Homes Sold</p>
+            <p className="rs-market-stat-value">28</p>
+          </div>
+          <div className="rs-market-divider" />
+          <div>
+            <p className="rs-market-stat-label">Avg. Price / Sq Ft</p>
+            <p className="rs-market-stat-value">$1,216</p>
+          </div>
+          <div className="rs-market-insight">
+            Strong seller conditions in 95124. Average sale-to-list ratio of <strong>104.6%</strong> with 77 active SFR listings — homes are moving fast.
+          </div>
+          <div className="rs-market-cta">
+            <Link href="/home-valuation" className="rs-btn-gold" style={{ fontSize: '11px', display: 'inline-block', padding: '14px 28px' }}>
+              Get valuation →
             </Link>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <section id="quote" className="scroll-mt-28 grid gap-12 rounded-[36px] bg-[#002147] p-10 text-white lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#FFD700]">Request a quote</p>
-            <h2 className="text-4xl font-semibold">Start your luxury real estate journey today.</h2>
-            <p className="max-w-xl text-base leading-7 text-slate-200">
-              Share your goals and timeline, and Reshma will respond with a custom quote for buying, selling, or investing in a premium property.
-            </p>
-            <div className="rounded-[28px] bg-white/10 p-6">
-              <p className="text-sm uppercase tracking-[0.18em] text-slate-300">Phone</p>
-              <p className="mt-2 text-xl font-semibold text-white">+1 408 478 9170</p>
+      {/* SERVICES */}
+      <div id="services" className="rs-services-bg" style={{ scrollMarginTop: '72px' }}>
+        <div className="rs-section" style={{ paddingBottom: '100px' }}>
+          <p className="rs-section-eyebrow">What we offer</p>
+          <h2 className="rs-section-h2">White-glove support,<br /><em>every step of the way.</em></h2>
+          <div className="rs-services-grid">
+            <div className="rs-service-card">
+              <p className="rs-service-num">01</p>
+              <p className="rs-service-title">Buyer Representation</p>
+              <p className="rs-service-body">Personalized search, market insight, and expert negotiation to secure the right luxury property — on your terms and timeline.</p>
+            </div>
+            <div className="rs-service-card">
+              <p className="rs-service-num">02</p>
+              <p className="rs-service-title">Seller Strategy</p>
+              <p className="rs-service-body">Strategic pricing, high-end presentation, and targeted outreach that consistently achieves premium results for discerning sellers.</p>
+              <Link href="/home-valuation" className="rs-service-link">Free valuation →</Link>
+            </div>
+            <div className="rs-service-card">
+              <p className="rs-service-num">03</p>
+              <p className="rs-service-title">Investment Advisory</p>
+              <p className="rs-service-body">Data-driven guidance for portfolio expansion, off-market access, and long-term wealth building through premium real estate.</p>
             </div>
           </div>
-          <div className="rounded-[32px] bg-white p-8 shadow-sm text-slate-900">
-            <h3 className="text-3xl font-semibold">Let's connect</h3>
-            <p className="mt-4 text-base leading-7 text-slate-600">
-              Complete the form below and Reshma will reach out with a personalized quote and next steps.
+        </div>
+      </div>
+
+      {/* CONTACT FORM */}
+      <div id="quote" className="rs-contact-section" style={{ scrollMarginTop: '72px' }}>
+        <div className="rs-contact-inner">
+          <div className="rs-contact-left">
+            <p style={{ fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px', fontWeight: 500 }}>
+              Request a quote
             </p>
-            <form ref={contactFormRef} onSubmit={onFormSubmit} className="mt-8 space-y-6">
-              {status ? (
-                <div
-                  className={`rounded-3xl border px-4 py-3 text-sm ${statusType === "success"
-                    ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                    : "border-rose-300 bg-rose-50 text-rose-900"
-                    }`}
-                >
-                  {status}
-                </div>
-              ) : null}
+            <h2>Start your<br /><em>luxury real estate</em><br />journey today.</h2>
+            <p>Share your goals and timeline. Reshma will respond with a custom plan for buying, selling, or investing in a premium property.</p>
+            <div className="rs-contact-phone-block">
+              <span className="rs-contact-phone-label">Direct line</span>
+              <a href="tel:+14084789170" className="rs-contact-phone">+1 408 478 9170</a>
+            </div>
+          </div>
+          <div>
+            {status && (
+              <div className={`rs-form-status ${statusType}`}>{status}</div>
+            )}
+            <form ref={contactFormRef} onSubmit={onFormSubmit} className="rs-form">
               <input type="hidden" name="city" value={cityName} />
-              <div className="grid gap-6 md:grid-cols-2">
-                <label className="block text-sm font-medium text-slate-700">
-                  Full Name
-                  <input
-                    type="text"
-                    name="fullName"
-                    className="mt-2 w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20"
-                    placeholder="Your name"
-                    required
-                  />
-                </label>
-                <label className="block text-sm font-medium text-slate-700">
-                  Email
-                  <input
-                    type="email"
-                    name="email"
-                    className="mt-2 w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20"
-                    placeholder="you@example.com"
-                    required
-                  />
-                </label>
+              <div className="rs-form-row">
+                <div className="rs-field">
+                  <label>Full Name</label>
+                  <input type="text" name="fullName" placeholder="Your name" required />
+                </div>
+                <div className="rs-field">
+                  <label>Email</label>
+                  <input type="email" name="email" placeholder="you@example.com" required />
+                </div>
               </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <label className="block text-sm font-medium text-slate-700">
-                  Phone
-                  <input
-                    type="tel"
-                    name="phone"
-                    className="mt-2 w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20"
-                    placeholder="(408) 478-9170"
-                  />
-                </label>
-                <label className="block text-sm font-medium text-slate-700">
-                  Property type
-                  <select
-                    name="propertyType"
-                    className="mt-2 w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20"
-                  >
+              <div className="rs-form-row">
+                <div className="rs-field">
+                  <label>Phone</label>
+                  <input type="tel" name="phone" placeholder="(408) 000-0000" />
+                </div>
+                <div className="rs-field">
+                  <label>Property Type</label>
+                  <select name="propertyType">
                     <option>Luxury home</option>
                     <option>Investment property</option>
                     <option>Estate sale</option>
                     <option>Other</option>
                   </select>
-                </label>
+                </div>
               </div>
-              <label className="block text-sm font-medium text-slate-700">
-                Message
-                <textarea
-                  name="message"
-                  rows={5}
-                  className="mt-2 w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20"
-                  placeholder="Describe your ideal property, timeline, or sale objectives"
-                  required
-                />
-              </label>
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-primary cursor-pointer inline-flex w-full items-center justify-center text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {loading ? "Sending..." : "Send request"}
+              <div className="rs-form-full rs-field">
+                <label>Message</label>
+                <textarea name="message" rows={5} placeholder="Describe your ideal property, timeline, or sale objectives" required />
+              </div>
+              <button type="submit" disabled={loading} className="rs-form-submit">
+                {loading ? "Sending…" : "Send Request"}
               </button>
             </form>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <section id="valuation" className="scroll-mt-28 py-12">
-          <div className="rounded-[36px] bg-[#0070f3] px-6 py-20 text-center text-white shadow-xl">
-            <div className="mx-auto max-w-3xl space-y-6">
-              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                What's My Home Worth?
-              </h2>
-              <p className="text-lg opacity-90">
-                Let Reshma Realtor help find your home's current market value today!
-              </p>
-              <div className="pt-6">
-                <Link
-                  href="/home-valuation"
-                  className="inline-flex rounded-xl border-2 border-white bg-transparent px-8 py-4 text-lg font-bold text-white transition hover:bg-white hover:text-[#0070f3]"
-                >
-                  Get a Home Valuation
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="testimonials" className="scroll-mt-28 grid gap-8 rounded-[36px] bg-[#002147] p-10 text-white lg:grid-cols-[1.4fr_1fr]">
-          <div className="space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#FFD700]">Why clients love Reshma</p>
-            <h2 className="text-4xl font-semibold">Trusted guidance from satisfied homeowners.</h2>
-            <p className="max-w-xl text-base leading-7 text-slate-200">
-              High-touch service and expert negotiation make every transaction feel effortless, from discovery through closing.
-            </p>
-          </div>
-          <div className="grid gap-6">
+      {/* TESTIMONIALS */}
+      <div id="testimonials" className="rs-testimonials-section">
+        <div className="rs-testimonials-inner">
+          <p className="rs-section-eyebrow">Client stories</p>
+          <h2 className="rs-section-h2">Trusted by<br /><em>satisfied homeowners.</em></h2>
+          <div className="rs-testimonials-grid">
             {testimonials.map((item) => (
-              <div key={item.name} className="rounded-[28px] bg-white/10 p-6 backdrop-blur-sm">
-                <p className="text-lg leading-8">“{item.quote}”</p>
-                <p className="mt-4 font-semibold text-white">{item.name}</p>
+              <div key={item.name} className="rs-testimonial-card">
+                <span className="rs-testimonial-quote-mark">"</span>
+                <p className="rs-testimonial-text">{item.quote}</p>
+                <p className="rs-testimonial-author">{item.name}</p>
+                <p className="rs-testimonial-role">{item.role}</p>
               </div>
             ))}
           </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-slate-200 bg-white py-10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 lg:px-10 lg:flex-row lg:items-end lg:justify-between">
-          <div className="space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#002147]">Reshma Realtor</p>
-            <p className="text-sm text-slate-600">Luxury homes, concierge service, and white-glove support.</p>
-          </div>
-          <div className="space-y-1 text-sm text-slate-600">
-            <p>Call: +1 408 478 9170</p>
-            <p>Email: hello@homesbyreshma.com</p>
-          </div>
         </div>
-      </footer>
+      </div>
+
+      {/* VALUATION CTA */}
+      <div className="rs-valuation">
+        <div className="rs-valuation-card">
+          <div>
+            <p className="rs-valuation-label">No cost. No obligation.</p>
+            <h3 className="rs-valuation-headline">What is your<br /><em>home worth?</em></h3>
+            <p className="rs-valuation-sub">Let Reshma find your home's current market value today.</p>
+          </div>
+          <Link href="/home-valuation" className="rs-valuation-btn">Get a Home Valuation</Link>
+        </div>
+      </div>
     </div>
   );
 }

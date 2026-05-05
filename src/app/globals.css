@@ -1,48 +1,1129 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #002147; /* Deep Navy */
-  --color-secondary: #B8860B; /* Dark Goldenrod */
-  --color-accent: #f5f5f5; /* Light Gray */
+  --color-primary: #002147;
+  --color-secondary: #B8860B;
+  --color-accent: #f5f5f5;
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #002147;
-  --secondary: #B8860B;
+  --navy: #0a1628;
+  --navy-mid: #112240;
+  --gold: #b8972a;
+  --gold-light: #d4aa45;
+  --gold-pale: #f5eed8;
+  --cream: #faf8f3;
+  --warm-white: #f7f4ee;
+  --stone: #e8e2d4;
+  --ink: #1a1612;
+  --muted: #7a7060;
+  --serif: var(--font-playfair), 'Cormorant Garamond', Georgia, serif;
+  --sans: var(--font-inter), 'DM Sans', system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-}
 
-.glass-morphism {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+/* ── RS DESIGN SYSTEM ── */
+@layer components {
 
-.text-gold-gradient {
-  background: linear-gradient(to right, #B8860B, #FFD700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
-.btn-primary {
-  @apply bg-primary text-white px-6 py-3 rounded-md transition-all duration-300 hover:bg-primary/90 hover:scale-105 active:scale-95;
-}
+  .rs-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-.btn-secondary {
-  @apply bg-secondary text-white px-6 py-3 rounded-md transition-all duration-300 hover:bg-secondary/90 hover:scale-105 active:scale-95;
+  /* ── HEADER ── */
+  .rs-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 248, 243, 0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--stone);
+  }
+
+  .rs-header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rs-logo-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    text-decoration: none;
+  }
+
+  .rs-logo-dre {
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .rs-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .rs-nav a {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .rs-nav a:hover {
+    color: var(--ink);
+  }
+
+  .rs-nav a.active {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .rs-header-cta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .rs-btn-gold {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    background: var(--gold);
+    padding: 9px 22px;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .rs-btn-gold:hover {
+    background: var(--gold-light);
+  }
+
+  .rs-btn-outline {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-decoration: none;
+    border: 1px solid var(--navy);
+    padding: 9px 22px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .rs-btn-outline:hover {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  /* ── HERO ── */
+  .rs-hero {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .rs-hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .rs-hero-h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.08;
+    color: var(--navy);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .rs-hero-h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .rs-hero-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 44px;
+    font-weight: 300;
+  }
+
+  .rs-hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .rs-hero-img-wrap {
+    position: relative;
+  }
+
+  .rs-hero-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -20px -20px 20px 20px;
+    border: 1px solid var(--stone);
+    z-index: 0;
+  }
+
+  .rs-hero-img-wrap img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 560px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .rs-hero-badge {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    z-index: 2;
+    background: var(--navy);
+    color: #fff;
+    padding: 20px 28px;
+    font-family: var(--sans);
+  }
+
+  .rs-hero-badge-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1;
+    display: block;
+  }
+
+  .rs-hero-badge-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── STATS STRIP ── */
+  .rs-stats {
+    background: var(--navy);
+    padding: 0;
+  }
+
+  .rs-stats-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .rs-stat-item {
+    padding: 52px 40px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .rs-stat-item:last-child {
+    border-right: none;
+  }
+
+  .rs-stat-value {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+    display: block;
+  }
+
+  .rs-stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 10px;
+    display: block;
+    font-weight: 400;
+  }
+
+  .rs-stat-accent {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  /* ── SECTION COMMON ── */
+  .rs-section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .rs-section-eyebrow {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .rs-section-h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 52px);
+    color: var(--navy);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+
+  .rs-section-h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ── ABOUT ── */
+  .rs-about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+    padding-top: 60px;
+  }
+
+  .rs-about-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .rs-about-body+.rs-about-body {
+    margin-top: 20px;
+  }
+
+  .rs-about-aside {
+    border-top: 1px solid var(--stone);
+    padding-top: 40px;
+  }
+
+  .rs-about-aside-title {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .rs-differentiator {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    align-items: flex-start;
+  }
+
+  .rs-diff-num {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--stone);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 48px;
+  }
+
+  .rs-diff-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+    padding-top: 8px;
+    font-weight: 300;
+  }
+
+  /* ── COMMISSION BAND ── */
+  .rs-commission {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+
+  .rs-commission-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .rs-commission-rate {
+    font-family: var(--serif);
+    font-size: 100px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .rs-commission-rate sup {
+    font-size: 40px;
+    vertical-align: super;
+  }
+
+  .rs-commission-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .rs-commission-headline {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .rs-commission-includes {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    padding-left: 80px;
+  }
+
+  .rs-commission-includes-title {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .rs-commission-list {
+    list-style: none;
+  }
+
+  .rs-commission-list li {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 2;
+    font-weight: 300;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .rs-commission-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 10px;
+  }
+
+  /* ── MARKET CARD ── */
+  .rs-market {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  .rs-market-card {
+    background: var(--warm-white);
+    border: 1px solid var(--stone);
+    padding: 48px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .rs-market-stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .rs-market-stat-value {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .rs-market-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--stone);
+  }
+
+  .rs-market-insight {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .rs-market-insight strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .rs-market-cta {
+    text-align: right;
+  }
+
+  .rs-market-header {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 400;
+    border-bottom: 1px solid var(--stone);
+    padding-bottom: 16px;
+  }
+
+  /* ── SERVICES ── */
+  .rs-services-bg {
+    background: var(--warm-white);
+  }
+
+  .rs-services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--stone);
+    margin-top: 60px;
+  }
+
+  .rs-service-card {
+    background: var(--warm-white);
+    padding: 48px 40px;
+  }
+
+  .rs-service-num {
+    font-family: var(--serif);
+    font-size: 60px;
+    font-weight: 300;
+    color: var(--stone);
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+
+  .rs-service-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .rs-service-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .rs-service-link {
+    display: inline-block;
+    margin-top: 28px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .rs-service-link:hover {
+    border-color: var(--gold);
+  }
+
+  /* ── CONTACT FORM ── */
+  .rs-contact-section {
+    background: var(--navy);
+  }
+
+  .rs-contact-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .rs-contact-left h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 50px;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .rs-contact-left h2 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .rs-contact-left p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 300;
+    max-width: 380px;
+    margin-bottom: 52px;
+  }
+
+  .rs-contact-phone-block {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 32px;
+  }
+
+  .rs-contact-phone-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 400;
+  }
+
+  .rs-contact-phone {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .rs-contact-phone:hover {
+    color: var(--gold-light);
+  }
+
+  .rs-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .rs-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rs-field label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+  }
+
+  .rs-field input,
+  .rs-field select,
+  .rs-field textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 300;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+
+  .rs-field input::placeholder,
+  .rs-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .rs-field input:focus,
+  .rs-field select:focus,
+  .rs-field textarea:focus {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .rs-field select option {
+    background: var(--navy-mid);
+    color: #fff;
+  }
+
+  .rs-field textarea {
+    resize: none;
+  }
+
+  .rs-form-full {
+    margin-bottom: 20px;
+  }
+
+  .rs-form-submit {
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    padding: 18px 40px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .rs-form-submit:hover:not(:disabled) {
+    background: var(--gold-light);
+  }
+
+  .rs-form-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .rs-form-status {
+    padding: 14px 18px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .rs-form-status.success {
+    background: rgba(52, 168, 83, 0.12);
+    color: #7dd3a8;
+    border: 1px solid rgba(52, 168, 83, 0.25);
+  }
+
+  .rs-form-status.error {
+    background: rgba(234, 67, 53, 0.12);
+    color: #f4a5a0;
+    border: 1px solid rgba(234, 67, 53, 0.25);
+  }
+
+  /* ── TESTIMONIALS ── */
+  .rs-testimonials-section {
+    background: var(--gold-pale);
+  }
+
+  .rs-testimonials-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .rs-testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+    background: var(--stone);
+  }
+
+  .rs-testimonial-card {
+    background: var(--gold-pale);
+    padding: 52px 48px;
+  }
+
+  .rs-testimonial-quote-mark {
+    font-family: var(--serif);
+    font-size: 80px;
+    line-height: 0.5;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: block;
+    opacity: 0.4;
+  }
+
+  .rs-testimonial-text {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--navy);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+
+  .rs-testimonial-author {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .rs-testimonial-role {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 300;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+
+  /* ── VALUATION CTA ── */
+  .rs-valuation {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 40px 100px;
+  }
+
+  .rs-valuation-card {
+    background: var(--navy);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 60px;
+    padding: 64px 72px;
+  }
+
+  .rs-valuation-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .rs-valuation-headline {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.15;
+  }
+
+  .rs-valuation-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .rs-valuation-sub {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  .rs-valuation-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--navy);
+    background: #fff;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .rs-valuation-btn:hover {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  /* ── FOOTER ── */
+  .rs-footer {
+    background: var(--ink);
+    padding: 60px 40px;
+  }
+
+  .rs-footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding-bottom: 52px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    margin-bottom: 40px;
+  }
+
+  .rs-footer-brand-name {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 300;
+    color: #fff;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .rs-footer-brand-dre {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 400;
+  }
+
+  .rs-footer-nav-title {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .rs-footer-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rs-footer-nav-list a {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .rs-footer-nav-list a:hover {
+    color: #fff;
+  }
+
+  .rs-footer-contact-title {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .rs-footer-contact-item {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  .rs-footer-contact-item a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .rs-footer-contact-item a:hover {
+    color: #fff;
+  }
+
+  .rs-footer-bottom {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rs-footer-copy {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 300;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+
+    .rs-hero,
+    .rs-about-grid,
+    .rs-contact-inner {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+
+    .rs-stats-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .rs-stat-item {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .rs-commission-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .rs-commission-includes {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 40px;
+    }
+
+    .rs-market-card {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .rs-market-divider {
+      display: none;
+    }
+
+    .rs-services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rs-testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rs-valuation-card {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .rs-footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .rs-hero-img-wrap::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rs-header-inner {
+      padding: 0 20px;
+    }
+
+    .rs-nav {
+      display: none;
+    }
+
+    .rs-hero,
+    .rs-section,
+    .rs-market,
+    .rs-valuation {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .rs-stats-inner {
+      grid-template-columns: 1fr 1fr;
+      padding: 0 20px;
+    }
+
+    .rs-commission {
+      padding: 60px 20px;
+    }
+
+    .rs-contact-inner {
+      padding: 60px 20px;
+    }
+
+    .rs-testimonials-inner {
+      padding: 60px 20px;
+    }
+
+    .rs-footer {
+      padding: 60px 20px;
+    }
+
+    .rs-footer-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .rs-form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .rs-commission-rate {
+      font-size: 72px;
+    }
+
+    .rs-valuation-card {
+      padding: 48px 32px;
+    }
+
+    .rs-hero-badge {
+      display: none;
+    }
+  }
 }
