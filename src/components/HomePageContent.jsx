@@ -224,7 +224,7 @@ export default function HomePageContent({ city = "" }) {
               <div className="flex flex-col sm:flex-row gap-4">
 
                 <Link
-                  href="/commission/1.5%commission"
+                  href="/commission/1-5-commission"
                   className="inline-flex items-center justify-center bg-[#C9A227] hover:bg-[#b8921d] text-black px-8 py-4 rounded-full text-sm uppercase tracking-[0.15em] transition-all duration-300"
                 >
                  {` View What's Included →`}

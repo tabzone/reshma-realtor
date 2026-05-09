@@ -37,7 +37,7 @@ export default function Navbar() {
                         </li>
                         <li>
                             <Link
-                                href="/commission/1.5%commission"
+                                href="/commission/1-5-commission"
                                 style={{  fontWeight: 500 }}
                             >
                             1.5% commission
