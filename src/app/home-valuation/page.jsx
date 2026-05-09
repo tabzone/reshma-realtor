@@ -20,8 +20,8 @@ export default function HomeValuationPage() {
             Get a precise, human-led valuation backed by real market expertise.
           </p>
           <div className="rs-hero-actions">
-            <Link href="/" className="rs-btn-outline" style={{ padding: '14px 32px', fontSize: '12px' }}>
-              ← Back to Home
+            <Link href="/home-valuation/#form" className="rs-btn-outline" style={{ padding: '14px 32px', fontSize: '12px' }}>
+              ← Start Valuation
             </Link>
           </div>
         </div>
@@ -43,26 +43,9 @@ export default function HomeValuationPage() {
       </section>
 
       {/* FORM SECTION */}
-      <main className="rs-section" style={{ paddingTop: '60px' }}>
+      <main id="form" className="rs-section" style={{ paddingTop: '60px' }}>
         {/* TRUST BAR */}
-        <div className="rs-stats-inner" style={{ background: 'var(--navy)', marginBottom: '80px', borderRadius: '4px' }}>
-          <div className="rs-stat-item">
-            <span className="rs-stat-value">28+</span>
-            <span className="rs-stat-label">Homes Sold</span>
-          </div>
-          <div className="rs-stat-item">
-            <span className="rs-stat-value">$500M+</span>
-            <span className="rs-stat-label">Sales Volume</span>
-          </div>
-          <div className="rs-stat-item">
-            <span className="rs-stat-value">12+</span>
-            <span className="rs-stat-label">Years Experience</span>
-          </div>
-          <div className="rs-stat-item">
-            <span className="rs-stat-value">9.5</span>
-            <span className="rs-stat-label">Client Rating</span>
-          </div>
-        </div>
+        
 
         <div className="rs-about-grid" style={{ gap: '60px' }}>
           <div className="rs-contact-section" style={{ padding: '48px', borderRadius: '8px' }}>
