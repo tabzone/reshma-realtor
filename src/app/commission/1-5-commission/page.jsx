@@ -1,71 +1,73 @@
+import Link from "next/link";
+
 export default function CommissionPage() {
   const services = [
     {
-      title: 'Professional Photography',
+      title: "Professional Photography",
       description:
-        'High-quality listing photography designed to showcase your home across MLS, Zillow, Redfin, Realtor.com, and marketing campaigns.',
+        "High-quality listing photography designed to showcase your home across MLS, Zillow, Redfin, Realtor.com, and marketing campaigns.",
     },
     {
-      title: 'MLS & Online Exposure',
+      title: "MLS & Online Exposure",
       description:
-        'Your property is syndicated across major real estate platforms to maximize visibility and buyer reach.',
+        "Your property is syndicated across major real estate platforms to maximize visibility and buyer reach.",
     },
     {
-      title: 'Strategic Pricing',
+      title: "Strategic Pricing",
       description:
-        'Comparative market analysis and pricing strategy tailored to current Bay Area market conditions.',
+        "Comparative market analysis and pricing strategy tailored to current Bay Area market conditions.",
     },
     {
-      title: 'Open Houses & Private Tours',
+      title: "Open Houses & Private Tours",
       description:
-        'Coordinated showings and open houses designed to attract qualified buyers.',
+        "Coordinated showings and open houses designed to attract qualified buyers.",
     },
     {
-      title: 'Digital Marketing',
+      title: "Digital Marketing",
       description:
-        'Targeted online advertising, social media exposure, email campaigns, and custom marketing materials.',
+        "Targeted online advertising, social media exposure, email campaigns, and custom marketing materials.",
     },
     {
-      title: 'Negotiation & Offer Management',
+      title: "Negotiation & Offer Management",
       description:
-        'Professional representation throughout offers, counteroffers, inspections, disclosures, and closing negotiations.',
+        "Professional representation throughout offers, counteroffers, inspections, disclosures, and closing negotiations.",
     },
     {
-      title: 'Transaction Coordination',
+      title: "Transaction Coordination",
       description:
-        'End-to-end management from listing to closing, including timelines, paperwork, escrow coordination, and communication.',
+        "End-to-end management from listing to closing, including timelines, paperwork, escrow coordination, and communication.",
     },
     {
-      title: 'Staging Guidance',
+      title: "Staging Guidance",
       description:
-        'Recommendations and preparation guidance to help present your home at its best.',
+        "Recommendations and preparation guidance to help present your home at its best.",
     },
   ];
 
   const faqs = [
     {
-      question: 'Is this a full-service listing?',
+      question: "Is this a full-service listing?",
       answer:
-        'Yes. Our 1.5% listing commission includes marketing, MLS exposure, negotiations, transaction management, and seller guidance throughout the process.',
+        "Yes. Our 1.5% listing commission includes marketing, MLS exposure, negotiations, transaction management, and seller guidance throughout the process.",
     },
     {
-      question: 'Are professional photos included?',
+      question: "Are professional photos included?",
       answer:
-        'Yes. Professional photography is included as part of our listing service.',
+        "Yes. Professional photography is included as part of our listing service.",
     },
     {
-      question: 'Will my home appear on Zillow and Redfin?',
+      question: "Will my home appear on Zillow and Redfin?",
       answer:
-        'Yes. Listings are syndicated across major real estate platforms through MLS distribution.',
+        "Yes. Listings are syndicated across major real estate platforms through MLS distribution.",
     },
     {
-      question: 'Are there upfront marketing fees?',
-      answer: 'No hidden upfront marketing fees.',
+      question: "Are there upfront marketing fees?",
+      answer: "No hidden upfront marketing fees.",
     },
     {
-      question: 'Do you work throughout the Bay Area?',
+      question: "Do you work throughout the Bay Area?",
       answer:
-        'Yes. We primarily serve Bay Area homeowners and surrounding communities.',
+        "Yes. We primarily serve Bay Area homeowners and surrounding communities.",
     },
   ];
 
@@ -121,7 +123,7 @@ export default function CommissionPage() {
               className="bg-white border border-[#ECE7DD] rounded-3xl p-8 hover:shadow-xl transition-all duration-300"
             >
               <div className="w-12 h-12 rounded-full border border-[#C9A227] flex items-center justify-center mb-6 text-[#C9A227] text-lg font-medium">
-                {String(index + 1).padStart(2, '0')}
+                {String(index + 1).padStart(2, "0")}
               </div>
 
               <h3 className="text-2xl font-light mb-4 tracking-tight">
@@ -167,7 +169,7 @@ export default function CommissionPage() {
             <p>
               The goal is simple:
               <span className="text-[#111827] font-medium">
-                {' '}
+                {" "}
                 deliver exceptional service while helping homeowners retain more
                 of their equity.
               </span>
@@ -209,9 +211,9 @@ export default function CommissionPage() {
 
             <tbody>
               {[
-                ['$1,500,000', '$37,500', '$22,500', '$15,000'],
-                ['$2,000,000', '$50,000', '$30,000', '$20,000'],
-                ['$3,000,000', '$75,000', '$45,000', '$30,000'],
+                ["$1,500,000", "$37,500", "$22,500", "$15,000"],
+                ["$2,000,000", "$50,000", "$30,000", "$20,000"],
+                ["$3,000,000", "$75,000", "$45,000", "$30,000"],
               ].map((row, index) => (
                 <tr
                   key={index}
@@ -221,7 +223,7 @@ export default function CommissionPage() {
                     <td
                       key={i}
                       className={`px-8 py-6 text-lg ${
-                        i === 3 ? 'text-[#C9A227] font-semibold' : ''
+                        i === 3 ? "text-[#C9A227] font-semibold" : ""
                       }`}
                     >
                       {item}
@@ -256,9 +258,7 @@ export default function CommissionPage() {
                 {faq.question}
               </h3>
 
-              <p className="text-[#6B7280] leading-8 text-base">
-                {faq.answer}
-              </p>
+              <p className="text-[#6B7280] leading-8 text-base">{faq.answer}</p>
             </div>
           ))}
         </div>
@@ -282,12 +282,24 @@ export default function CommissionPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="bg-[#C9A227] text-black px-8 py-4 rounded-full text-sm tracking-wide uppercase hover:opacity-90 transition-opacity">
+            {/* <button className=""> */}
+            <Link
+              href="/#quote"
+              className="bg-[#C9A227] text-black px-8 py-4 rounded-full text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
+            >
               Schedule Consultation
-            </button>
+            </Link>
+
+            {/* </button> */}
 
             <button className="border border-white/20 px-8 py-4 rounded-full text-sm tracking-wide uppercase hover:bg-white hover:text-black transition-all duration-300">
-              Contact Us
+              <a
+                href="tel:+14084789170"
+                // className="rs-btn-outline"
+                style={{ padding: "14px 32px", fontSize: "12px" }}
+              >
+                Contact Us
+              </a>
             </button>
           </div>
         </div>
