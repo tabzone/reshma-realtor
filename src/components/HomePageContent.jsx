@@ -1,593 +1,774 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import axios from "axios";
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
-const testimonials = [
-  {
-    quote:
-      "Reshma made our home purchase effortless and enjoyable. Her attention to detail is exceptional.",
-    name: "Claire Morgan",
-  },
-  {
-    quote:
-      "A truly personalized experience. Reshma found us the perfect home ahead of schedule.",
-    name: "James Carter",
-  },
-];
-
-function formatCity(city) {
-  if (!city) return "";
-
-  return String(city)
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+function Stat({ value, label }) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <span className="font-display text-5xl font-bold text-[#b8986a] leading-none">
+        {value}
+      </span>
+      <span className="text-xs uppercase tracking-[0.18em] text-[#6b5e4e]">
+        {label}
+      </span>
+    </div>
+  );
 }
 
-export default function HomePageContent({ city = "" }) {
-  const contactFormRef = useRef();
-
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-  const [statusType, setStatusType] = useState("");
-
-  const cityName = formatCity(city);
-
-  const onFormSubmit = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-    setStatus("");
-    setStatusType("");
-
-    const data = new FormData(contactFormRef.current);
-    const value = Object.fromEntries(data.entries());
-
-    axios
-      .post("https://formspree.io/f/mnqypzev", {
-        fullName: value.fullName,
-        email: value.email,
-        message: value.message,
-        phone: value.phone,
-        city: value.city,
-      })
-      .then(() => {
-        setLoading(false);
-        setStatus("Message sent successfully.");
-        setStatusType("success");
-        contactFormRef.current.reset();
-      })
-      .catch(() => {
-        setLoading(false);
-        setStatus("Failed to send. Please try again.");
-        setStatusType("error");
-      });
-  };
-
+function ServiceCard({ number, title, description, link, linkLabel }) {
   return (
-    <div className="rs-page">
-      {/* HERO */}
-      <section className="rs-hero">
-        <div>
-          <p className="rs-hero-eyebrow">Bay Area Real Estate</p>
+    <div className="group relative border border-[#e0d8cc] bg-white p-8 hover:border-[#b8986a] transition-all duration-300 hover:shadow-lg">
+      <span className="block font-display text-6xl font-bold text-[#f0ebe0] group-hover:text-[#e8dcc8] transition-colors select-none mb-4 leading-none">
+        {number}
+      </span>
+      <h3 className="font-display text-xl font-semibold text-[#1a1612] mb-3">
+        {title}
+      </h3>
+      <p className="text-[#5c5044] text-lg leading-relaxed mb-5">
+        {description}
+      </p>
+      {link && (
+        <Link
+          href={link}
+          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#b8986a] hover:text-[#9a7a4e] transition-colors"
+        >
+          {linkLabel || "Learn more"}
+          <span className="text-base">→</span>
+        </Link>
+      )}
+    </div>
+  );
+}
 
-          <h1 className="rs-hero-h1">
-            Bay Area
-            <br />
-            <em>real estate</em>
-            <br />
-            tailored around you.
-          </h1>
+function TestimonialCard({ quote, name, location }) {
+  return (
+    <div className="bg-[#faf8f3] border border-[#e0d8cc] p-8 relative">
+      <span className="font-display text-6xl text-[#d4c4a8] leading-none absolute top-4 left-6 select-none">
+        {`"`}
+      </span>
+      <p className="text-[#4a3f35] text-base leading-relaxed mt-6 mb-6 italic">
+        {quote}
+      </p>
+      <div>
+        <p className="font-semibold text-[#1a1612] text-sm">{name}</p>
+        {location && (
+          <p className="text-base text-[#8a7a6a] mt-0.5">{location}</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
-          <p className="rs-hero-body">
-            Strategic guidance for buyers, sellers, and investors across the
-            Bay Area — combining modern marketing, local expertise, and
-            personalized representation.
-          </p>
+function ProcessStep({ step, title, description }) {
+  return (
+    <div className="flex gap-5 items-start">
+      <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-[#b8986a] flex items-center justify-center">
+        <span className="font-display font-bold text-[#b8986a] text-sm">
+          {step}
+        </span>
+      </div>
+      <div>
+        <h4 className="font-semibold text-[#1a1612] mb-1">{title}</h4>
+        <p className="text-[#5c5044] text-lg leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+}
 
-          <div className="rs-hero-actions">
-            <a
-              href="tel:+14084789170"
-              className="rs-btn-outline"
-              style={{ padding: "14px 32px", fontSize: "12px" }}
+function FaqItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-[#e0d8cc]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex justify-between items-center py-5 text-left group"
+      >
+        <span className="font-medium text-lg text-[#1a1612] pr-4">{question}</span>
+        <span
+          className={`flex-shrink-0 w-6 h-6 rounded-full border border-[#b8986a] flex items-center justify-center text-[#b8986a] text-sm font-bold transition-transform duration-300 ${
+            open ? "rotate-45" : ""
+          }`}
+        >
+          +
+        </span>
+      </button>
+      {open && (
+        <p className="text-[#5c5044] text-base leading-relaxed pb-5">{answer}</p>
+      )}
+    </div>
+  );
+}
+
+export default function HomePageContent() {
+  return (
+    <div className="font-sans">
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-[#1a1612]">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-35"
+          style={{ backgroundImage: "url('/images/hero.png')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1612] via-[#1a1612]/80 to-transparent" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-24 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
+              Bay Area Real Estate · DRE #02106214
+            </p>
+            <h1
+              className="text-5xl lg:text-7xl  text-white leading-[1.05] mb-6"
+              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
             >
-              +1 408 478 9170
-            </a>
+              Bay Area homes,{" "}
+              <em className="text-[#b8986a] not-italic">expertly</em> sold.
+            </h1>
+            <p className="text-[#c8b89a] text-lg leading-relaxed mb-10 max-w-xl">
+              Reshma Sait is a licensed Realtor® under REeBroker Group — giving
+              you the personal attention of a dedicated agent, backed by the
+              oversight and accountability of a full brokerage.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#quote"
+                className="bg-[#b8986a] text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#9a7a4e] transition-colors"
+              >
+                Free Consultation
+              </a>
+              <Link
+                href="/commission/1-5-commission"
+                className="border border-[#b8986a] text-[#b8986a] px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#b8986a]/10 transition-colors"
+              >
+                1.5% Commission →
+              </Link>
+            </div>
+          </div>
+
+          <div className="hidden lg:grid grid-cols-2 gap-px bg-white/10">
+            {[
+              { value: "1.5%", label: "Listing Commission" },
+              { value: "Bay Area", label: "Local Market Focus" },
+              { value: "Client-First", label: "Personalized Service" },
+              { value: "Licensed", label: "California Real Estate Agent" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="bg-[#1a1612]/80 backdrop-blur-sm p-10 flex flex-col items-center justify-center gap-2"
+              >
+                <span
+                  className="text-4xl text-[#b8986a]"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
+                  {s.value}
+                </span>
+                <span className="text-xs uppercase tracking-[0.18em] text-[#8a7a6a]">
+                  {s.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="rs-hero-img-wrap">
-          <Image
-            src="/images/hero.png"
-            alt="Modern home exterior"
-            width={700}
-            height={560}
-            style={{
-              width: "100%",
-              height: "560px",
-              objectFit: "cover",
-              display: "block",
-            }}
-            priority
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#b8986a]/60">
+          <span className="text-[10px] uppercase tracking-widest">Scroll</span>
+          <div className="w-px h-8 bg-[#b8986a]/40 animate-pulse" />
+        </div>
+      </section>
+
+      <section className="bg-[#b8986a] py-4 px-6">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 lg:gap-12 text-white text-xs font-semibold uppercase tracking-widest">
+          {[
+            "Licensed Realtor® · DRE #02106214",
+            "Supervised by REeBroker Group",
+            "San Jose · Silicon Valley · Bay Area",
+            "1.5% Full-Service Commission",
+          ].map((item, i) => (
+            <span key={i} className="flex items-center gap-3">
+              {i > 0 && (
+                <span className="hidden lg:inline text-white/40">·</span>
+              )}
+              {item}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section id="about" className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+              Meet Reshma
+            </p>
+            <h2
+              className="text-4xl lg:text-5xl text-[#1a1612] leading-tight mb-6"
+              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              A dedicated agent,
+              <em className="text-[#b8986a]">not a corporation.</em>
+            </h2>
+            <div className="space-y-4 text-[#5c5044] leading-relaxed text-lg">
+              <p>
+                Reshma Sait is a licensed California Realtor® who works
+                exclusively in the Bay Area. She operates under the license and
+                supervision of {" "}
+                <strong className="text-[#2a2622]">REeBroker Group</strong>,
+                meaning every transaction you do with her carries the full
+                accountability and compliance oversight of a licensed brokerage
+                — not just one agent working alone.
+              </p>
+              <p>
+                When you hire Reshma, you work directly with Reshma. No
+                hand-offs, no assistants, no junior agents. She handles your
+                transaction personally from the first showing or listing
+                appointment through to closing.
+              </p>
+              <p>
+                {`With deep roots in Silicon Valley's competitive market, she
+                brings local pricing intelligence, proven negotiation skills,
+                and the kind of frank, honest guidance that helps clients make
+                confident decisions.`}
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3 ">
+              {[
+                "CA Licensed Realtor®",
+                "DRE #02106214",
+                "REeBroker Group",
+                "NAR Member",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  className="border border-[#b8986a] text-[#b8986a] text-xs font-semibold px-3 py-1.5 uppercase tracking-wider"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {[
+              {
+                n: "01",
+                title: "Broker-Supervised Transactions",
+                body: "Every deal Reshma handles is conducted under the legal supervision of REeBroker Group. That oversight protects you — and it's what the law requires of every licensed sales agent in California.",
+              },
+              {
+                n: "02",
+                title: "Direct, Personal Representation",
+                body: "You speak with Reshma, not a team coordinator. She attends every showing, reviews every disclosure, and negotiates directly on your behalf.",
+              },
+              {
+                n: "03",
+                title: "Honest Bay Area Market Insight",
+                body: "Reshma tells you what a home is actually worth and why — including when a property is overpriced or a neighborhood trend is working against you.",
+              },
+              {
+                n: "04",
+                title: "Commission That Makes Sense",
+                body: "Full-service seller representation at 1.5%. Every service included. No hidden fees, no reduced effort.",
+              },
+            ].map((item) => (
+              <div
+                key={item.n}
+                className="flex gap-5 border-b border-[#e8e0d4] pb-6 "
+              >
+                <span
+                  className="font-bold text-[#d4c4a8] text-2xl flex-shrink-0 leading-none mt-1"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
+                  {item.n}
+                </span>
+                <div>
+                  <h4 className="font-semibold text-base text-[#1a1612] mb-1.5">
+                    {item.title}
+                  </h4>
+                  <p className="text-[#5c5044] text-base leading-relaxed">
+                    {item.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#1a1612] py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+                Seller Representation
+              </p>
+              <h2
+                className="text-4xl lg:text-5xl text-white leading-tight mb-6"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              >
+                Keep more of <em className="text-[#b8986a]">your equity.</em>
+              </h2>
+              <p className="text-[#a09080] leading-relaxed mb-8 text-lg">
+                Most listing agents charge 2.5–3%. Reshma charges{" "}
+                <strong className="text-white">1.5%</strong> for the same
+                full-service representation — professional photography, MLS and
+                Zillow exposure, open houses, staging guidance, and hands-on
+                negotiation support. Nothing is removed from the package.
+              </p>
+              <p className="text-[#a09080] leading-relaxed mb-10">
+                On a {" "}
+                <strong className="text-white">
+                  $1.5 million Bay Area home 
+                </strong>
+                ,{` that's up to`} {" "}
+                <strong className="text-[#b8986a]">$15,000 more</strong> in your
+                pocket — without sacrificing quality or service.
+              </p>
+              <Link
+                href="/commission/1-5-commission"
+                className="inline-flex items-center gap-3 bg-[#b8986a] text-white px-8 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-[#9a7a4e] transition-colors"
+              >
+               {` See What's Included →`}
+              </Link>
+            </div>
+
+            {/* Included services grid */}
+            <div className="grid grid-cols-2 gap-px bg-white/10">
+              {[
+                { icon: "📸", label: "Professional Photography" },
+                { icon: "🎬", label: "3D Virtual Tours" },
+                { icon: "📋", label: "MLS + Zillow Listing" },
+                { icon: "🏡", label: "Open Houses" },
+                { icon: "🎨", label: "Staging Guidance" },
+                { icon: "🤝", label: "Offer Negotiation" },
+                { icon: "📊", label: "Comparative Market Analysis" },
+                { icon: "📝", label: "Contract & Closing Support" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="bg-[#1a1612] p-6 flex flex-col items-center gap-2 text-center hover:bg-[#2a2018] transition-colors"
+                >
+                  {/* <span className="text-2xl">{item.icon}</span> */}
+                  <span className="text-white text-lg leading-snug">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+            What Reshma Offers
+          </p>
+          <h2
+            className="text-4xl lg:text-5xl text-[#1a1612] leading-tight"
+            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+          >
+            Strategic support, <em className="text-[#b8986a]">every step.</em>
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-px bg-[#e0d8cc]">
+          <ServiceCard
+            number="01"
+            title="Buyer Representation"
+            description="Reshma helps buyers find the right home at the right price. That means real-time MLS access, honest evaluation of each property, and aggressive but disciplined offer strategy in Bay Area's competitive bidding environment."
+            link="/#quote"
+            linkLabel="Talk to Reshma"
+          />
+          <ServiceCard
+            number="02"
+            title="Seller Strategy at 1.5%"
+            description="Full-service listing representation — pricing strategy, professional photography, MLS exposure, open houses, and expert negotiation — all at 1.5% commission. You keep more without receiving less."
+            link="/commission/1-5-commission"
+            linkLabel="See full details"
+          />
+          <ServiceCard
+            number="03"
+            title="Investment Guidance"
+            description="Whether you're buying your first rental property or expanding a portfolio, Reshma provides data-driven Bay Area market analysis to help you evaluate ROI, cap rates, and long-term appreciation potential."
+            link="/#quote"
+            linkLabel="Get started"
           />
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section
-        id="about"
-        className="rs-section"
-        style={{ scrollMarginTop: "72px" }}
-      >
-        <div className="rs-about-grid" style={{ alignItems: "center" }}>
-          <div>
-            <p className="rs-section-eyebrow">Meet Reshma Sait</p>
-
-            <h2 className="rs-section-h2">
-              A dedication to
-              <br />
-              <em>your success.</em>
-            </h2>
-
-            <div style={{ marginTop: "32px" }}>
-              <p className="rs-about-body">
-               {` Reshma Sait is more than just a real estate agent; she is a
-                trusted advisor and strategic partner in your real estate
-                journey. With extensive experience in the Bay Area market,
-                Reshma has built a reputation for integrity, exceptional
-                service, and results-driven representation.`}
+      <section className="bg-[#f4f0e8] py-24 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Seller process */}
+            <div>
+              <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+                Selling Your Home
               </p>
-
-              <p className="rs-about-body" style={{ marginTop: "20px" }}>
-              {`  Combining local expertise with a modern approach to marketing,
-                negotiation, and client service, Reshma helps buyers, sellers,
-                and investors navigate today’s competitive market with
-                confidence.`}
-              </p>
-
-              <p className="rs-about-body" style={{ marginTop: "20px" }}>
-              {`  Whether you're purchasing your first home, selling a longtime
-                residence, or expanding your investment portfolio, every client
-                receives personalized guidance tailored to their goals.`}
-              </p>
-            </div>
-          </div>
-
-          <div className="rs-about-aside">
-            <p className="rs-about-aside-title">Why work with Reshma</p>
-
-            {[
-              "Personalized strategies tailored to your goals.",
-              "Bay Area market expertise and insight.",
-              "Modern marketing for maximum exposure.",
-              "Full-service representation from start to close.",
-            ].map((text, i) => (
-              <div key={i} className="rs-differentiator">
-                <span className="rs-diff-num">0{i + 1}</span>
-                <span className="rs-diff-text">{text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* COMMISSION */}
-      <section className="px-6 lg:px-12 py-24">
-        <div className="max-w-7xl mx-auto bg-[#111827] rounded-[40px] overflow-hidden">
-
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] items-center">
-
-            {/* LEFT */}
-            <div className="p-10 md:p-16 lg:p-20 text-white">
-
-              <p className="uppercase tracking-[0.28em] text-xs text-[#C9A227] mb-6">
-                Bay Area Seller Representation
-              </p>
-
-              <h2 className="text-5xl md:text-7xl leading-[0.95] font-light tracking-[-0.04em] mb-8">
-                Keep More of
-                <br />
-                Your Equity.
-
-                <span className="block text-[#C9A227] mt-5 text-2xl md:text-3xl tracking-normal">
-                  Full-Service Listing Representation at 1.5%
-                </span>
-              </h2>
-
-              <p className="text-gray-300 text-lg leading-9 max-w-2xl mb-10">
-                Professional photography, MLS exposure, digital marketing,
-                negotiation support, open houses, staging guidance, and
-                personalized seller representation — all included.
-              </p>
-
-              <div className="flex flex-wrap gap-3 mb-12">
-                {[
-                  "Photography",
-                  "MLS Exposure",
-                  "Open Houses",
-                  "Digital Marketing",
-                  "Negotiation",
-                  "Staging Guidance",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="border border-white/10 rounded-full px-5 py-3 text-sm text-gray-200"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-
-                <Link
-                  href="/commission/1-5-commission"
-                  className="inline-flex items-center justify-center bg-[#C9A227] hover:bg-[#b8921d] text-black px-8 py-4 rounded-full text-sm uppercase tracking-[0.15em] transition-all duration-300"
-                >
-                 {` View What's Included →`}
-                </Link>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center border border-white/15 hover:bg-white hover:text-black text-white px-8 py-4 rounded-full text-sm uppercase tracking-[0.15em] transition-all duration-300"
-                >
-                  Free Consultation
-                </Link>
-
-              </div>
-            </div>
-
-            {/* RIGHT */}
-            <div className="bg-[#F7F4EE] h-full flex items-center justify-center p-10 lg:p-16">
-
-              <div className="w-full max-w-md bg-white rounded-[32px] p-10 border border-[#ECE7DD] shadow-xl">
-
-                <div className="flex items-end gap-3 mb-8">
-
-                  <span className="text-8xl leading-none font-light text-[#111827]">
-                    1.5
-                  </span>
-
-                  <span className="text-3xl text-[#C9A227] mb-2">
-                    %
-                  </span>
-
-                </div>
-
-                <div className="h-px bg-[#ECE7DD] mb-8" />
-
-                <div>
-
-                  <p className="uppercase tracking-[0.24em] text-xs text-[#C9A227] mb-6">
-                    Included Services
-                  </p>
-
-                  <div className="space-y-5">
-
-                    {[
-                      "Professional Photography",
-                      "3D Virtual Tours",
-                      "Digital Marketing",
-                      "MLS + Zillow Exposure",
-                      "Seller Representation",
-                    ].map((item) => (
-
-                      <div
-                        key={item}
-                        className="flex items-center gap-3 text-[#4B5563]"
-                      >
-                        <div className="w-2 h-2 rounded-full bg-[#C9A227]" />
-
-                        <span>{item}</span>
-                      </div>
-
-                    ))}
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <div
-        id="services"
-        className="rs-services-bg"
-        style={{ scrollMarginTop: "72px" }}
-      >
-        <div className="rs-section" style={{ paddingBottom: "100px" }}>
-          <p className="rs-section-eyebrow">What we offer</p>
-
-          <h2 className="rs-section-h2">
-            Strategic support,
-            <br />
-            <em>every step of the way.</em>
-          </h2>
-
-          <div className="rs-services-grid">
-            <div className="rs-service-card">
-              <p className="rs-service-num">01</p>
-
-              <p className="rs-service-title">
-                Buyer Representation
-              </p>
-
-              <p className="rs-service-body">
-                Personalized search, market insight, and expert negotiation
-                to secure the right property — on your terms and timeline.
-              </p>
-            </div>
-
-            <div className="rs-service-card">
-              <p className="rs-service-num">02</p>
-
-              <p className="rs-service-title">
-                Seller Strategy
-              </p>
-
-              <p className="rs-service-body">
-                Strategic pricing, high-end presentation, and targeted
-                marketing designed to maximize exposure and results.
-              </p>
-
-              <Link
-                href="/home-valuation"
-                className="rs-service-link"
+              <h3
+                className="text-3xl font-medium text-[#1a1612] mb-8 leading-tight"
+                style={{ fontFamily: "Georgia, serif" }}
               >
-                Free valuation →
-              </Link>
-            </div>
-
-            <div className="rs-service-card">
-              <p className="rs-service-num">03</p>
-
-              <p className="rs-service-title">
-                Investment Advisory
-              </p>
-
-              <p className="rs-service-body">
-                Data-driven guidance for portfolio expansion, market
-                opportunities, and long-term real estate investment strategy.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CONTACT */}
-      <div
-        id="quote"
-        className="rs-contact-section"
-        style={{ scrollMarginTop: "72px" }}
-      >
-        <div className="rs-contact-inner">
-
-          <div className="rs-contact-left">
-
-            <p
-              style={{
-                fontSize: "10px",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--gold)",
-                marginBottom: "20px",
-                fontWeight: 500,
-              }}
-            >
-              Free Consultation
-            </p>
-
-            <h2>
-             {` Let's discuss your`}
-              <br />
-              <em>next move.</em>
-            </h2>
-
-            <p>
-              Share your goals and timeline. Reshma will respond with
-              personalized guidance for buying, selling, or investing in
-              Bay Area real estate.
-            </p>
-
-            <div className="rs-contact-phone-block">
-              <span className="rs-contact-phone-label">
-                Direct line
-              </span>
-
-              <a
-                href="tel:+14084789170"
-                className="rs-contact-phone"
-              >
-                +1 408 478 9170
-              </a>
-            </div>
-
-          </div>
-
-          <div>
-
-            {status && (
-              <div className={`rs-form-status ${statusType}`}>
-                {status}
-              </div>
-            )}
-
-            <form
-              ref={contactFormRef}
-              onSubmit={onFormSubmit}
-              className="rs-form"
-            >
-              <input
-                type="hidden"
-                name="city"
-                value={cityName}
-              />
-
-              <div className="rs-form-row">
-
-                <div className="rs-field">
-                  <label>Full Name</label>
-
-                  <input
-                    type="text"
-                    name="fullName"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div className="rs-field">
-                  <label>Email</label>
-
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="you@example.com"
-                    required
-                  />
-                </div>
-
-              </div>
-
-              <div className="rs-form-row">
-
-                <div className="rs-field">
-                  <label>Phone</label>
-
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="(408) 000-0000"
-                  />
-                </div>
-
-                <div className="rs-field">
-                  <label>Property Type</label>
-
-                  <select name="propertyType">
-                    <option>Home Purchase</option>
-                    <option>Home Sale</option>
-                    <option>Investment Property</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-              </div>
-
-              <div className="rs-form-full rs-field">
-                <label>Message</label>
-
-                <textarea
-                  name="message"
-                  rows={5}
-                  placeholder="Tell us about your goals or timeline"
-                  required
+                The selling process with Reshma
+              </h3>
+              <div className="space-y-7">
+                <ProcessStep
+                  step="1"
+                  title="Free Home Valuation"
+                  description="Reshma runs a detailed comparative market analysis based on recent Bay Area sales, your home's specific condition, and current buyer demand."
+                />
+                <ProcessStep
+                  step="2"
+                  title="Prepare & Stage"
+                  description="She'll advise on what repairs or staging will actually move the needle — and which aren't worth the expense."
+                />
+                <ProcessStep
+                  step="3"
+                  title="Professional Photography & Listing"
+                  description="Your home goes live with high-quality photos, a compelling description, MLS, Zillow, Redfin, and Realtor.com exposure."
+                />
+                <ProcessStep
+                  step="4"
+                  title="Open Houses & Showings"
+                  description="Reshma personally hosts open houses and private showings, collecting feedback and building buyer urgency."
+                />
+                <ProcessStep
+                  step="5"
+                  title="Negotiate & Close"
+                  description="She evaluates every offer, explains the trade-offs clearly, and negotiates directly to get you the best outcome."
                 />
               </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="rs-form-submit"
+            <div>
+              <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+                Buying a Home
+              </p>
+              <h3
+                className="text-3xl font-medium text-[#1a1612] mb-8 leading-tight"
+                style={{ fontFamily: "Georgia, serif" }}
               >
-                {loading
-                  ? "Sending…"
-                  : "Schedule Consultation"}
-              </button>
-
-            </form>
-
-          </div>
-
-        </div>
-      </div>
-
-      {/* TESTIMONIALS */}
-      <div id="testimonials" className="rs-testimonials-section">
-
-        <div className="rs-testimonials-inner">
-
-          <p className="rs-section-eyebrow">
-            Client stories
-          </p>
-
-          <h2 className="rs-section-h2">
-            Trusted by
-            <br />
-            <em>Bay Area homeowners.</em>
-          </h2>
-
-          <div className="rs-testimonials-grid">
-
-            {testimonials.map((item) => (
-              <div
-                key={item.name}
-                className="rs-testimonial-card"
-              >
-                <span className="rs-testimonial-quote-mark">
-                  {`"`}
-                </span>
-
-                <p className="rs-testimonial-text">
-                  {item.quote}
-                </p>
-
-                <p className="rs-testimonial-author">
-                  {item.name}
-                </p>
+                The buying process with Reshma
+              </h3>
+              <div className="space-y-7">
+                <ProcessStep
+                  step="1"
+                  title="Clarify Your Goals"
+                  description="One conversation is usually enough to understand your must-haves, neighborhood preferences, timeline, and budget range."
+                />
+                <ProcessStep
+                  step="2"
+                  title="Targeted Property Search"
+                  description="Reshma sets up real-time alerts and personally previews homes before recommending them — saving you time on properties that don't fit."
+                />
+                <ProcessStep
+                  step="3"
+                  title="Evaluate & Inspect"
+                  description="She helps you read disclosure packages, interpret inspection reports, and understand what items are deal-breakers vs. negotiating points."
+                />
+                <ProcessStep
+                  step="4"
+                  title="Strategic Offer"
+                  description="In the Bay Area's competitive market, offer strategy matters. Reshma advises on price, terms, and contingencies to make your offer stand out."
+                />
+                <ProcessStep
+                  step="5"
+                  title="Close with Confidence"
+                  description="She stays with you through escrow, loan coordination, final walkthrough, and key handover."
+                />
               </div>
-            ))}
-
+            </div>
           </div>
-
         </div>
+      </section>
 
-      </div>
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+            Where Reshma Works
+          </p>
+          <h2
+            className="text-4xl font-medium text-[#1a1612]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Bay Area communities
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-[#e0d8cc]">
+          {[
+            "San Jose",
+            "Silicon Valley",
+            "Santa Clara",
+            "Sunnyvale",
+            "Los Gatos",
+            "Cambrian Park",
+            "Cupertino",
+            "Saratoga",
+            "Campbell",
+            "Milpitas",
+            "Fremont",
+            "Mountain View",
+          ].map((city) => (
+            <div
+              key={city}
+              className="bg-white py-6 px-4 text-center hover:bg-[#b8986a] group transition-colors cursor-default"
+            >
+              <span className="text-lg text-[#3a3028] group-hover:text-white transition-colors">
+                {city}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* VALUATION CTA */}
-      <div className="rs-valuation">
-
-        <div className="rs-valuation-card">
-
-          <div>
-
-            <p className="rs-valuation-label">
-              No cost. No obligation.
+      <section className="bg-[#1a1612] py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+              Client Stories
             </p>
-
-            <h3 className="rs-valuation-headline">
-              What is your
-              <br />
-              <em>home worth?</em>
-            </h3>
-
-            <p className="rs-valuation-sub">
-              Let Reshma provide a personalized home valuation based on
-              current Bay Area market conditions.
-            </p>
-
+            <h2
+              className="text-4xl font-medium text-white"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Trusted by Bay Area homeowners
+            </h2>
           </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <TestimonialCard
+              quote="Reshma made our home purchase effortless and enjoyable. Her attention to detail and frank advice helped us avoid two properties that weren't worth the price. Exceptional."
+              name="Claire Morgan"
+              location="San Jose, CA"
+            />
+            <TestimonialCard
+              quote="A truly personalized experience from start to finish. Reshma found us the perfect home ahead of schedule and negotiated $40k off asking. She works hard for her clients."
+              name="James Carter"
+              location="Sunnyvale, CA"
+            />
+            <TestimonialCard
+              quote="The 1.5% listing was honestly what got our attention, but what kept us was the service. Professional photography, two open houses, and sold over asking in 12 days."
+              name="Priya Nair"
+              location="Santa Clara, CA"
+            />
+          </div>
+        </div>
+      </section>
 
+      <section className="py-24 px-6 max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+            Common Questions
+          </p>
+          <h2
+            className="text-4xl font-medium text-[#1a1612]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Frequently asked
+          </h2>
+        </div>
+        <div>
+          {[
+            {
+              q: "Is Reshma a licensed real estate agent?",
+              a: "Yes. Reshma Sait holds an active California real estate salesperson license (DRE #02106214). She operates under the broker supervision of REeBroker Group, which is legally required for all sales agents in California. This structure ensures every transaction is compliant, accountable, and fully protected under California real estate law.",
+            },
+            {
+              q: "What does it mean that she works with a broker?",
+              a: "In California, sales agents like Reshma must work under a licensed broker. REeBroker Group is her sponsoring broker — they provide compliance oversight, errors & omissions insurance, and transaction review. You get the personal service of a dedicated individual agent with the legal structure and accountability of a full brokerage behind every deal.",
+            },
+            {
+              q: "Why is the commission only 1.5%?",
+              a: "The 1.5% listing fee covers full-service representation: professional photography, 3D tours, MLS listing, Zillow/Redfin exposure, open houses, staging guidance, and negotiation. Reshma is able to offer this rate by running a lean, focused practice — not because she cuts corners on what matters.",
+            },
+            {
+              q: "Do I still pay a buyer's agent commission?",
+              a: "Under current NAR settlement rules, buyer's agent compensation is negotiated separately. Reshma will walk you through what's customary in your specific transaction and area, and help you understand your total costs before you commit.",
+            },
+            {
+              q: "What areas does Reshma serve?",
+              a: "Reshma is active across San Jose, Silicon Valley, Santa Clara, Sunnyvale, Los Gatos, Cambrian Park, Cupertino, Saratoga, Campbell, and surrounding Bay Area communities.",
+            },
+            {
+              q: "How do I get started?",
+              a: "The easiest first step is a free consultation — either a call or an in-person meeting. Reshma will listen to your goals, give you honest market context, and explain exactly what she'll do for you. No pressure, no obligation.",
+            },
+          ].map((item) => (
+            <FaqItem key={item.q} question={item.q} answer={item.a} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── HOME VALUATION CTA ───────────────────────────────────────────── */}
+      <section className="bg-[#f4f0e8] py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+            No Cost · No Obligation
+          </p>
+          <h2
+            className="text-4xl lg:text-5xl font-medium text-[#1a1612] mb-5"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            What is your home worth?
+          </h2>
+          <p className="text-[#5c5044] leading-relaxed mb-8">
+            Get a personalized home valuation from Reshma based on current Bay
+            Area market conditions — not a generic algorithm estimate.
+          </p>
           <Link
             href="/home-valuation"
-            className="rs-valuation-btn"
+            className="inline-flex items-center gap-3 bg-[#1a1612] text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-[#b8986a] transition-colors"
           >
-            Get a Home Valuation
+            Get a Free Valuation →
           </Link>
-
         </div>
+      </section>
 
-      </div>
+      <section id="quote" className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div>
+            <p className="text-[#b8986a] text-xs font-semibold uppercase tracking-[0.25em] mb-4">
+              Free Consultation
+            </p>
+            <h2
+              className="text-4xl lg:text-5xl font-medium text-[#1a1612] leading-tight mb-6"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              {`Let's talk about `}
+              <em className="text-[#b8986a]">your next move.</em>
+            </h2>
+            <p className="text-[#5c5044] leading-relaxed mb-8">
+             {` Whether you're buying, selling, or just exploring your options,
+              Reshma offers a straightforward, no-pressure consultation. She'll
+              give you honest market insight and a clear plan — so you can
+              decide what's right for you.`}
+            </p>
+
+            <div className="space-y-4">
+              <a
+                href="tel:+14084789170"
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-12 h-12 border border-[#b8986a] flex items-center justify-center text-[#b8986a] text-lg flex-shrink-0">
+                  📞
+                </div>
+                <div>
+                  <p className="text-xs text-[#8a7a6a] uppercase tracking-wider mb-0.5">
+                    Direct Line
+                  </p>
+                  <p className="font-medium text-xl text-[#1a1612] group-hover:text-[#b8986a] transition-colors">
+                    +1 408 478 9170
+                  </p>
+                </div>
+              </a>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 border border-[#b8986a] flex items-center justify-center text-[#b8986a] text-lg flex-shrink-0">
+                  📍
+                </div>
+                <div>
+                  <p className="text-xs text-[#8a7a6a] uppercase tracking-wider mb-0.5">
+                    Areas Served
+                  </p>
+                  <p className="font-medium text-lg text-[#1a1612]">
+                    San Jose · Silicon Valley · Bay Area
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 border border-[#b8986a] flex items-center justify-center text-[#b8986a] text-lg flex-shrink-0">
+                  🏢
+                </div>
+                <div>
+                  <p className="text-xs text-[#8a7a6a] uppercase tracking-wider mb-0.5">
+                    Brokerage
+                  </p>
+                  <p className="font-medium text-lg text-[#1a1612]">
+                    REeBroker Group · DRE #02106214
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#faf8f3] border border-[#e0d8cc] p-8">
+            <h3 className="font-semibold text-[#1a1612] text-lg mb-6">
+              Send a message
+            </h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a]"
+                    placeholder="Jane"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a]"
+                    placeholder="Smith"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a]"
+                  placeholder="jane@example.com"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a]"
+                  placeholder="+1 (408) 000-0000"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                  I am a…
+                </label>
+                <select className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a] text-[#5c5044]">
+                  <option value="">Select one</option>
+                  <option>Home Buyer</option>
+                  <option>Home Seller</option>
+                  <option>Investor</option>
+                  <option>Just exploring</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-[#8a7a6a] mb-2">
+                  Message
+                </label>
+                <textarea
+                  rows={4}
+                  className="w-full border border-[#d4c8b8] bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#b8986a] resize-none"
+                  placeholder="Tell Reshma what you're looking for…"
+                />
+              </div>
+              <button
+                type="button"
+                className="w-full bg-[#b8986a] text-white py-4 text-sm font-semibold uppercase tracking-widest hover:bg-[#9a7a4e] transition-colors"
+              >
+                Schedule Consultation
+              </button>
+              <p className="text-center text-xs text-[#8a7a6a]">
+                Reshma personally responds within 24 hours.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
