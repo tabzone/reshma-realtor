@@ -11,7 +11,7 @@ export default function Navbar() {
         <Link href="/" style={{ textDecoration: "none" }}>
           {/* <span className="rs-logo-name text-3xl">Reshma Sait</span>
                     <span className="rs-logo-dre" style={{ fontSize: '13px' }}>
-                        Realtor® · DRE #02106214 · REeBroker Group
+                        Realtor® · DRE #02106214 · BRG Realty
                     </span> */}
           <Image
             src="/reshma-logo2.png"

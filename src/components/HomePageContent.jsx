@@ -123,7 +123,7 @@ export default function HomePageContent() {
               <em className="text-[#b8986a] not-italic">expertly</em> sold.
             </h1>
             <p className="text-[#c8b89a] text-lg leading-relaxed mb-10 max-w-xl">
-              Reshma Sait is a licensed Realtor® under REeBroker Group — giving
+              Reshma Sait is a licensed Realtor® under BRG Realty — giving
               you the personal attention of a dedicated agent, backed by the
               oversight and accountability of a full brokerage.
             </p>
@@ -178,7 +178,7 @@ export default function HomePageContent() {
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 lg:gap-12 text-white text-xs font-semibold uppercase tracking-widest">
           {[
             "Licensed Realtor® · DRE #02106214",
-            "Supervised by REeBroker Group",
+            "Supervised by BRG Realty",
             "San Jose · Silicon Valley · Bay Area",
             "1.5% Full-Service Commission",
           ].map((item, i) => (
@@ -210,7 +210,7 @@ export default function HomePageContent() {
                 Reshma Sait is a licensed California Realtor® who works
                 exclusively in the Bay Area. She operates under the license and
                 supervision of {" "}
-                <strong className="text-[#2a2622]">REeBroker Group</strong>,
+                <strong className="text-[#2a2622]">BRG Realty</strong>,
                 meaning every transaction you do with her carries the full
                 accountability and compliance oversight of a licensed brokerage
                 — not just one agent working alone.
@@ -233,7 +233,7 @@ export default function HomePageContent() {
               {[
                 "CA Licensed Realtor®",
                 "DRE #02106214",
-                "REeBroker Group",
+                "BRG Realty",
                 "NAR Member",
               ].map((badge) => (
                 <span
@@ -251,7 +251,7 @@ export default function HomePageContent() {
               {
                 n: "01",
                 title: "Broker-Supervised Transactions",
-                body: "Every deal Reshma handles is conducted under the legal supervision of REeBroker Group. That oversight protects you — and it's what the law requires of every licensed sales agent in California.",
+                body: "Every deal Reshma handles is conducted under the legal supervision of BRG Realty. That oversight protects you — and it's what the law requires of every licensed sales agent in California.",
               },
               {
                 n: "02",
@@ -568,11 +568,11 @@ export default function HomePageContent() {
           {[
             {
               q: "Is Reshma a licensed real estate agent?",
-              a: "Yes. Reshma Sait holds an active California real estate salesperson license (DRE #02106214). She operates under the broker supervision of REeBroker Group, which is legally required for all sales agents in California. This structure ensures every transaction is compliant, accountable, and fully protected under California real estate law.",
+              a: "Yes. Reshma Sait holds an active California real estate salesperson license (DRE #02106214). She operates under the broker supervision of BRG Realty, which is legally required for all sales agents in California. This structure ensures every transaction is compliant, accountable, and fully protected under California real estate law.",
             },
             {
               q: "What does it mean that she works with a broker?",
-              a: "In California, sales agents like Reshma must work under a licensed broker. REeBroker Group is her sponsoring broker — they provide compliance oversight, errors & omissions insurance, and transaction review. You get the personal service of a dedicated individual agent with the legal structure and accountability of a full brokerage behind every deal.",
+              a: "In California, sales agents like Reshma must work under a licensed broker. BRG Realty is her sponsoring broker — they provide compliance oversight, errors & omissions insurance, and transaction review. You get the personal service of a dedicated individual agent with the legal structure and accountability of a full brokerage behind every deal.",
             },
             {
               q: "Why is the commission only 1.5%?",
@@ -680,7 +680,7 @@ export default function HomePageContent() {
                     Brokerage
                   </p>
                   <p className="font-medium text-lg text-[#1a1612]">
-                    REeBroker Group · DRE #02106214
+                    BRG Realty · DRE #02075330
                   </p>
                 </div>
               </div>
